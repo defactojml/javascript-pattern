@@ -19,18 +19,18 @@ h2 {color: #678; text-shadow: 1px 1px 2px #aaa; font-size:1.1em}
     width: 80%;
     outline: 1px solid #333;
 }
-.cats, .cat {
+div ul {
     margin: 0; padding: 0;
 }
 
-.cats li {
+#master ul li {
     color: #fff;
     padding: 10px;
     list-style: none;
     background: tomato
 }
 
-.cat li {
+#detail ul li {
     color: #fff;
     padding: 10px;
     list-style: none;
