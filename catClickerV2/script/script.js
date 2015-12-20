@@ -53,7 +53,7 @@ else {
 function removeContentsFromContainer(){
   // we remove the master / detail elements
   containerElement.removeChild(masterElement);
-  containerElement.removeChild(detailElement);
+  containerElement.removeChild(c);
 }
 
 
