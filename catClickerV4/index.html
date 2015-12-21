@@ -10,6 +10,47 @@
 <h1>Cat Clicker MVO with admin</h1>
 
 <div id="container" class="container">
+    <div id="master" class="master">
+        <h2>List of Cats</h2>
+        <ul id="list"></ul>
+    </div>
+
+    <div id="detail" class="detail">
+        <h2>Detail of the Cat selected</h2>
+        <ul id="detailCat">
+            <li id="detailCatName"></li>
+            <li id="detailCatImg"></li>
+            <li id="detailCatCounter"></li>
+        </ul>
+    </div>
+
+    <div id="admin" class="admin">
+        <h2>Admin section</h2>
+
+        <div id="adminHeader" class="adminHeader">
+            <input type="button" value="admin">
+        </div>
+
+        <ul id="adminDetail" class="adminDetail">
+            <li>
+                <span>Name of the cat</span>
+                <input >
+            </li>
+            <li>
+                <span>Number of # for the cat</span>
+                <input >
+            </li>
+            <li>
+                <input type="button" value="submit">
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div id="error" class="error" style="visibility: hidden">
+    <h2>Sorry, no data retrieved</h2>
+</div>
+
 </div>
 
 
