@@ -46,6 +46,7 @@ var octopus = {
     if (model.getAllCats()){
       listView.init();
       detailView.init();
+      adminView.init();
     } else {
       errorView.init()
     }
@@ -173,6 +174,73 @@ var errorView = {
   render: function(errorElements) {
     errorElements.innerHTML = 'Sorry, no data retrieved';
   }
+};
+
+
+var adminView = {
+  init: function () {
+    this.containerElement = utils.retrieveContainerElement();
+    this.adminElements = createAdminElements();
+    utils.addElementsToContainer(this.containerElement,this.adminElements);
+    adminView.render(this.adminElements);
+
+    function createAdminElements(){
+      var mainElement = document.createElement('div');
+      mainElement.setAttribute("id", "admin");
+      mainElement.setAttribute("class", "admin");
+
+      var subTitleElement = document.createElement("h2");
+      subTitleElement.innerHTML = 'Admin section';
+      mainElement.appendChild(subTitleElement);
+
+      var subSectionElement1 = document.createElement("div");
+      subSectionElement1.setAttribute("id", "header");
+      subSectionElement1.setAttribute("class", "header");
+      mainElement.appendChild(subSectionElement1);
+
+      var buttonElement = document.createElement("input");
+      buttonElement.type = "button";
+      buttonElement.value = "admin";
+      subSectionElement1.appendChild(buttonElement);
+
+      var subSectionElement2 = document.createElement("div");
+      subSectionElement2.setAttribute("id", "adminDetail");
+      subSectionElement2.setAttribute("class", "adminDetail");
+      mainElement.appendChild(subSectionElement2);
+
+
+      var detailContainerElement = document.createElement("ul");
+      subSectionElement2.appendChild(detailContainerElement);
+
+      var nameElementDetail = document.createElement("li");
+      var nameLabelValue = document.createElement("span");
+      nameLabelValue.innerHTML = " Name of the cat";
+      var nameInputValue = document.createElement("input");
+      nameElementDetail.appendChild(nameLabelValue);
+      nameElementDetail.appendChild(nameInputValue);
+      detailContainerElement.appendChild(nameElementDetail);
+
+      var counterElementDetail = document.createElement("li");
+      var counterLabelValue = document.createElement("span");
+      counterLabelValue.innerHTML = " Number of # for the cat";
+      var counterInputValue = document.createElement("input");
+      counterElementDetail.appendChild(counterLabelValue);
+      counterElementDetail.appendChild(counterInputValue);
+      detailContainerElement.appendChild(counterElementDetail);
+
+      var submitElementDetail = document.createElement("li");
+      var buttonSubmitElement = document.createElement("input");
+      buttonSubmitElement.type = "button";
+      buttonSubmitElement.value = "submit";
+      submitElementDetail.appendChild(buttonSubmitElement);
+      detailContainerElement.appendChild(submitElementDetail);
+
+      return mainElement;
+    }
+  },
+  render: function(adminElements) {
+  }
+
 };
 
 var utils = {
