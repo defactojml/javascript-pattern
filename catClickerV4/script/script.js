@@ -142,7 +142,6 @@ var adminView = {
     var adminDetailElement = document.getElementById('adminDetail');
     adminDetailElement.style.visibility='hidden';
   }
-
 };
 
 var utils = {
