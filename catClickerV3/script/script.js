@@ -105,7 +105,7 @@ var listView = {
       listElement.addEventListener('click', function(e) {
         var catId = this.id;
         var cat = octopus.getCatById(catId);
-        detailView.render(detailView.detailElements, cat);
+        detailView.render(detailView.detailElements.childNodes[1], cat);
       });
     });
   }
@@ -117,7 +117,7 @@ var detailView = {
     this.containerElement = utils.retrieveContainerElement();
     this.detailElements = createDetailElements();
     utils.addElementsToContainer(this.containerElement,this.detailElements);
-    detailView.render(this.detailElements, octopus.getFirstCatFromSortedCats());
+    detailView.render(this.detailElements.childNodes[1], octopus.getFirstCatFromSortedCats());
 
     function createDetailElements(){
       var mainElement = document.createElement('div');
@@ -131,32 +131,30 @@ var detailView = {
       var detailContainerElement = document.createElement("ul");
       mainElement.appendChild(detailContainerElement);
 
+      var liElementDetailName = document.createElement("li");
+      detailContainerElement.appendChild(liElementDetailName);
+
+      var liElementDetailPic = document.createElement("li");
+      detailContainerElement.appendChild(liElementDetailPic);
+
+      var liElementDetailCounter = document.createElement("li");
+      detailContainerElement.appendChild(liElementDetailCounter);
+
       return mainElement
     }
   },
-  render: function(detailElement, cat) {
-
-    var liElementDetailName = document.createElement("li");
-    liElementDetailName.setAttribute("id", cat.id);
-
-    liElementDetailName.innerHTML = "cat's name is " + cat.name;
-    detailElement.childNodes[1].appendChild(liElementDetailName);
-
-    var liElementDetailPic = document.createElement("li");
-    liElementDetailPic.innerHTML = "<img id='picClickableZone' src=" + cat.img + " />";
-    detailElement.childNodes[1].appendChild(liElementDetailPic);
-
-    var liElementDetailCounter = document.createElement("li");
-    liElementDetailCounter.innerHTML = "this cat has been clicked " + cat.counter + " times";
-    detailElement.childNodes[1].appendChild(liElementDetailCounter);
-
+  render: function(catDetailElements, cat) {
+    catDetailElements.childNodes[0].setAttribute("id", cat.id);
+    catDetailElements.childNodes[0].innerHTML = "cat's name is " + cat.name;
+    catDetailElements.childNodes[1].innerHTML = "<img id='picClickableZone' src=" + cat.img + " />";
+    catDetailElements.childNodes[2].innerHTML = "this cat has been clicked " + cat.counter + " times";
 
     var clickableZoneElement = document.getElementById('picClickableZone');
     clickableZoneElement.addEventListener('click', function(e) {
       var catId = this.parentElement.parentElement.childNodes[0].id;
       var cat = octopus.getCatById(catId);
       cat.counter += 1;
-      liElementDetailCounter.innerHTML = "this cat has been clicked " + cat.counter + " times";
+      this.parentElement.parentElement.childNodes[2].innerHTML = "this cat has been clicked " + cat.counter + " times";
     });
   }
 };
