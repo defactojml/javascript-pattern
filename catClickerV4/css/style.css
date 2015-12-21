@@ -1,0 +1,38 @@
+
+
+body {margin:0; padding:10px 40px; background:#fff;
+    font-size: 1.4em;
+    font-family: helvetica, arial, serif;}
+h1 {color: #345; text-shadow: 1px 1px 2px #aaa; font-size:1.8em}
+h2 {color: #678; text-shadow: 1px 1px 2px #aaa; font-size:1.1em}
+.container {
+    display: -webkit-flex;
+    display: flex;
+}
+
+.master {
+    width: 20%;
+    outline: 1px solid #333;
+}
+
+.detail {
+    width: 80%;
+    outline: 1px solid #333;
+}
+div ul {
+    margin: 0; padding: 0;
+}
+
+#master ul li {
+    color: #fff;
+    padding: 10px;
+    list-style: none;
+    background: tomato
+}
+
+#detail ul li {
+    color: #fff;
+    padding: 10px;
+    list-style: none;
+    background: cadetblue;
+}
