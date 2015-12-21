@@ -30,8 +30,6 @@ var jsonCats = [{
   "counter": 0
 }];
 
-jsonCats = [];
-
 var model = {
   getAllCats: function() {
     if (jsonCats.length) {
@@ -59,7 +57,15 @@ var octopus = {
   },
   getFirstCatFromSortedCats: function() {
     return this.getSortedCats()[0];
+  },
+  getCatById: function(id){
+    return this.getSortedCats().filter(function ( obj ) {
+      return obj.id === id;
+    })[0];
+
   }
+
+
 };
 
 // The view consists of 3 components: listView, detailView & errorView
@@ -94,6 +100,13 @@ var listView = {
       listElement.id = cat.id ;
       listElement.innerHTML = '<a href="#">' + cat.name + '</a>';
       listElements.childNodes[1].appendChild(listElement);
+
+
+      listElement.addEventListener('click', function(e) {
+        var catId = this.id;
+        var cat = octopus.getCatById(catId);
+        detailView.render(detailView.detailElements, cat);
+      });
     });
   }
 };
@@ -124,6 +137,8 @@ var detailView = {
   render: function(detailElement, cat) {
 
     var liElementDetailName = document.createElement("li");
+    liElementDetailName.setAttribute("id", cat.id);
+
     liElementDetailName.innerHTML = "cat's name is " + cat.name;
     detailElement.childNodes[1].appendChild(liElementDetailName);
 
@@ -134,6 +149,15 @@ var detailView = {
     var liElementDetailCounter = document.createElement("li");
     liElementDetailCounter.innerHTML = "this cat has been clicked " + cat.counter + " times";
     detailElement.childNodes[1].appendChild(liElementDetailCounter);
+
+
+    var clickableZoneElement = document.getElementById('picClickableZone');
+    clickableZoneElement.addEventListener('click', function(e) {
+      var catId = this.parentElement.parentElement.childNodes[0].id;
+      var cat = octopus.getCatById(catId);
+      cat.counter += 1;
+      liElementDetailCounter.innerHTML = "this cat has been clicked " + cat.counter + " times";
+    });
   }
 };
 
