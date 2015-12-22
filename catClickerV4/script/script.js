@@ -31,7 +31,7 @@ var jsonCats = [{
 }];
 
 var model = {
-  getAllCats: function() {
+  getAllCats: function () {
     if (jsonCats.length) {
       return jsonCats;
     }
@@ -42,8 +42,8 @@ var octopus = {
   // on loading:
   // - get the list of cats stored in the mocked array
   // - create the initial dom elements
-  init: function() {
-    if (model.getAllCats()){
+  init: function () {
+    if (model.getAllCats()) {
       listView.init();
       detailView.init();
       adminView.init();
@@ -51,16 +51,16 @@ var octopus = {
       errorView.init()
     }
   },
-  getSortedCats: function() {
-    return model.getAllCats().sort(function(catA, catB) {
+  getSortedCats: function () {
+    return model.getAllCats().sort(function (catA, catB) {
       return (catA.name).localeCompare(catB.name);
     });
   },
-  getFirstCatFromSortedCats: function() {
+  getFirstCatFromSortedCats: function () {
     return this.getSortedCats()[0];
   },
-  getCatById: function(id){
-    return this.getSortedCats().filter(function ( obj ) {
+  getCatById: function (id) {
+    return this.getSortedCats().filter(function (obj) {
       return obj.id === id;
     })[0];
   }
@@ -69,20 +69,20 @@ var octopus = {
 // The view consists of 3 components: listView, detailView & errorView
 var listView = {
   // initialize the view dom elements
-  init: function() {
+  init: function () {
     var listContainerElement = document.getElementById('list');
     listView.render(listContainerElement);
   },
 
-  render: function(listElements){
-    octopus.getSortedCats().forEach(function(cat){
+  render: function (listElements) {
+    octopus.getSortedCats().forEach(function (cat) {
       var listElement = null;
       listElement = document.createElement("li");
-      listElement.id = cat.id ;
+      listElement.id = cat.id;
       listElement.innerHTML = '<a href="#">' + cat.name + '</a>';
       listElements.appendChild(listElement);
 
-      listElement.addEventListener('click', function(e) {
+      listElement.addEventListener('click', function (e) {
         var catId = this.id;
         var cat = octopus.getCatById(catId);
         detailView.render(cat);
@@ -93,11 +93,13 @@ var listView = {
 
 var detailView = {
   // initialize the view dom elements
-  init: function() {
+  init: function () {
     var detailContainerElement = document.getElementById('detailCat');
     detailView.render(octopus.getFirstCatFromSortedCats());
+    adminView.render(octopus.getFirstCatFromSortedCats());
+
   },
-  render: function(cat) {
+  render: function (cat) {
     var detailCatName = document.getElementById('detailCatName');
     detailCatName.setAttribute("catid", cat.id);
     detailCatName.innerHTML = "cat's name is " + cat.name;
@@ -108,11 +110,46 @@ var detailView = {
     var detailCatCounter = document.getElementById('detailCatCounter');
     detailCatCounter.innerHTML = "this cat has been clicked " + cat.counter + " times";
 
-    detailCatImg.addEventListener('click', function(e) {
+    detailCatImg.addEventListener('click', function (e) {
       var catId = detailCatName.getAttribute("catid");
       var cat = octopus.getCatById(catId);
       cat.counter += 1;
       detailCatCounter.innerHTML = "this cat has been clicked " + cat.counter + " times";
+    });
+  }
+};
+
+var adminView = {
+  init: function () {
+  },
+  render: function (cat) {
+    var adminDetailElement = document.getElementById('adminDetail');
+    adminDetailElement.style.visibility = 'hidden';
+
+    var adminButton = document.getElementById('adminButton');
+    adminButton.addEventListener('click', function (e) {
+      adminDetailElement.style.visibility = 'visible  ';
+    });
+
+    var catNameElement = document.getElementById('catName');
+    catNameElement.value = cat.name;
+    var catCounterElement = document.getElementById('catCounter');
+    catCounterElement.value = cat.counter;
+
+    var submitBtn = document.getElementById('submitBtn');
+    submitBtn.addEventListener('click', function (e) {
+      cat.name = catNameElement.value;
+      cat.counter = parseInt(catCounterElement.value);
+      catNameElement.value = "";
+      catCounterElement.value = "";
+      adminDetailElement.style.visibility = 'hidden';
+    });
+
+    var cancelBtn = document.getElementById('cancelBtn');
+    cancelBtn.addEventListener('click', function (e) {
+      catNameElement.value = "";
+      catCounterElement.value = "";
+      adminDetailElement.style.visibility = 'hidden';
     });
   }
 };
@@ -125,7 +162,7 @@ var errorView = {
     var errorElement = document.getElementById('error');
     errorView.render(masterElement, detailElement, adminElement, errorElement);
   },
-  render: function(masterElement, detailElement, adminElement, errorElement ) {
+  render: function (masterElement, detailElement, adminElement, errorElement) {
     masterElement.parentNode.removeChild(masterElement);
     detailElement.parentNode.removeChild(detailElement);
     adminElement.parentNode.removeChild(adminElement);
@@ -134,17 +171,6 @@ var errorView = {
 };
 
 
-var adminView = {
-  init: function () {
-    adminView.render();
-  },
-  render: function() {
-    var adminDetailElement = document.getElementById('adminDetail');
-    adminDetailElement.style.visibility='hidden';
-  }
-};
-
-var utils = {
-};
+var utils = {};
 
 octopus.init();
