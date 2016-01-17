@@ -29,4 +29,4 @@ for (var i = 0; i < nums.length; i++) {
   // finally, let's add this element to the document
   document.body.appendChild(elem);
 
-};
+}

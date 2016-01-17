@@ -2,33 +2,6 @@
  * Created by jean-michel.legrand on 17/11/2015.
  */
 
-// mocked json file
-var jsonCats = [{
-  "id": "cat1",
-  "name": "Xuxa",
-  "img": 'images/kitty1.jpg',
-  "counter": 0
-}, {
-  "id": "cat2",
-  "name": "Dramatic",
-  "img": 'images/kitty2.jpg',
-  "counter": 0
-}, {
-  "id": "cat3",
-  "name": "Winter",
-  "img": 'images/kitty3.jpg',
-  "counter": 0
-}, {
-  "id": "cat4",
-  "name": "Japanese",
-  "img": 'images/kitty4.jpg',
-  "counter": 0
-}, {
-  "id": "cat5",
-  "name": "Sweeties",
-  "img": 'images/kitty5.jpg',
-  "counter": 0
-}];
 
 // initialisation of the main DOM elements
 var containerElement = document.getElementById('container');
@@ -36,11 +9,11 @@ var masterElement = document.getElementById('master');
 var detailElement = document.getElementById('detail');
 
 // When data are available
-if (jsonCats.length) {
+if (datas.length) {
   // we sort the list
-  var sortedCats = sortByName(jsonCats);
+  var sortedCats = sortByName(datas);
   // we  build the elements (ul / li + contents) to display the list
-  buildMasterList();
+  buildMasterList(sortedCats);
   detailElement.style.visibility='hidden';
 }
 // When there is no data ...
@@ -65,19 +38,18 @@ function createErrorMessageFromContainer(){
 }
 
 function sortByName(cats) {
-  var sortedCats = cats.sort(function(catA, catB) {
+  return cats.sort(function(catA, catB) {
     return (catA.name).localeCompare(catB.name);
   });
-  return sortedCats;
 }
 
 
-function buildMasterList() {
+function buildMasterList(cats) {
 
   var ulElementMaster = document.createElement("ul");
   var ulElementDetail = null; // to avoid the issue of the null retrieved when selecting on a different link from the initial one
   masterElement.appendChild(ulElementMaster);
-  sortedCats.forEach(function(cat) {
+  cats.forEach(function(cat) {
     var liElementMaster = null;
 
     liElementMaster = document.createElement("li");
@@ -113,7 +85,7 @@ function buildMasterList() {
 
 
         var clickableZoneElement = document.getElementById('picClickableZone');
-        clickableZoneElement.addEventListener('click', function(tempCat) {
+        clickableZoneElement.addEventListener('click', function() {
           tempCat.counter += 1;
           liElementDetailCounter.innerHTML = "this cat has been clicked " + tempCat.counter + " times";
         });
