@@ -102,7 +102,7 @@ var listView = {
       listElements.childNodes[1].appendChild(listElement);
 
 
-      listElement.addEventListener('click', function(e) {
+      listElement.addEventListener('click', function() {
         var catId = this.id;
         var cat = octopus.getCatById(catId);
         detailView.render(detailView.detailElements.childNodes[1], cat);
@@ -150,7 +150,7 @@ var detailView = {
     catDetailElements.childNodes[2].innerHTML = "this cat has been clicked " + cat.counter + " times";
 
     var clickableZoneElement = document.getElementById('picClickableZone');
-    clickableZoneElement.addEventListener('click', function(e) {
+    clickableZoneElement.addEventListener('click', function() {
       var catId = this.parentElement.parentElement.childNodes[0].id;
       var cat = octopus.getCatById(catId);
       cat.counter += 1;

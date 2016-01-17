@@ -82,7 +82,7 @@ var listView = {
       listElement.innerHTML = '<a href="#">' + cat.name + '</a>';
       listElements.appendChild(listElement);
 
-      listElement.addEventListener('click', function (e) {
+      listElement.addEventListener('click', function () {
         var catId = this.id;
         var cat = octopus.getCatById(catId);
         detailView.render(cat);
@@ -94,7 +94,6 @@ var listView = {
 var detailView = {
   // initialize the view dom elements
   init: function () {
-    var detailContainerElement = document.getElementById('detailCat');
     detailView.render(octopus.getFirstCatFromSortedCats());
     adminView.render(octopus.getFirstCatFromSortedCats());
 
@@ -110,7 +109,7 @@ var detailView = {
     var detailCatCounter = document.getElementById('detailCatCounter');
     detailCatCounter.innerHTML = "this cat has been clicked " + cat.counter + " times";
 
-    detailCatImg.addEventListener('click', function (e) {
+    detailCatImg.addEventListener('click', function () {
       var catId = detailCatName.getAttribute("catid");
       var cat = octopus.getCatById(catId);
       cat.counter += 1;
@@ -127,7 +126,7 @@ var adminView = {
     adminDetailElement.style.visibility = 'hidden';
 
     var adminButton = document.getElementById('adminButton');
-    adminButton.addEventListener('click', function (e) {
+    adminButton.addEventListener('click', function () {
       adminDetailElement.style.visibility = 'visible  ';
     });
 
@@ -137,7 +136,7 @@ var adminView = {
     catCounterElement.value = cat.counter;
 
     var submitBtn = document.getElementById('submitBtn');
-    submitBtn.addEventListener('click', function (e) {
+    submitBtn.addEventListener('click', function () {
       cat.name = catNameElement.value;
       cat.counter = parseInt(catCounterElement.value);
       catNameElement.value = "";
@@ -146,7 +145,7 @@ var adminView = {
     });
 
     var cancelBtn = document.getElementById('cancelBtn');
-    cancelBtn.addEventListener('click', function (e) {
+    cancelBtn.addEventListener('click', function () {
       catNameElement.value = "";
       catCounterElement.value = "";
       adminDetailElement.style.visibility = 'hidden';
@@ -170,7 +169,5 @@ var errorView = {
   }
 };
 
-
-var utils = {};
 
 octopus.init();
