@@ -10,11 +10,9 @@ var detailElement = document.getElementById('detail');
 
 // When data are available
 if (datas.length) {
-  // we sort the list
   var sortedCats = sortByName(datas);
-  // we  build the elements (ul / li + contents) to display the list
   buildMasterList(sortedCats);
-  detailElement.style.visibility='hidden';
+  hideByDefaultDetailContent(detailElement);
 }
 // When there is no data ...
 else {
@@ -26,7 +24,11 @@ else {
 function removeContentsFromContainer(){
   // we remove the master / detail elements
   containerElement.removeChild(masterElement);
-  containerElement.removeChild(c);
+  containerElement.removeChild(detailElement);
+}
+
+function hideByDefaultDetailContent(element){
+  element.style.visibility='hidden';
 }
 
 
@@ -47,7 +49,8 @@ function sortByName(cats) {
 function buildMasterList(cats) {
 
   var ulElementMaster = document.createElement("ul");
-  var ulElementDetail = null; // to avoid the issue of the null retrieved when selecting on a different link from the initial one
+  // to avoid the issue of the null retrieved when selecting on a different link from the initial one
+  var ulElementDetail = null;
   masterElement.appendChild(ulElementMaster);
   cats.forEach(function(cat) {
     var liElementMaster = null;

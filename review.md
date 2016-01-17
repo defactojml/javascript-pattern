@@ -100,6 +100,28 @@ Can't see the eventListener created in the dev tool in debug mode. To which prop
 Question 2
 Each time, we click on the master view, we recreate from scratch the detail view. The best approach?
 
+Question 3
+What is the best approach?
+
+* Approach 1: relying on global variables declares at the beginning of the file (masterElement)
+
+
+* Approach 2: relying on functions that have these variables as parameters (cats)
+
+```javascript
+var masterElement = document.getElementById('master');
+
+buildMasterList(sortedCats);
+  
+...
+  
+function buildMasterList(cats) {
+  var ulElementMaster = document.createElement("ul");
+  var ulElementDetail = null; // to avoid the issue of the null retrieved when selecting on a different link from the initial one
+  masterElement.appendChild(ulElementMaster);
+  
+  }
+```
 
 
 
