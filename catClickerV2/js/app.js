@@ -94,9 +94,6 @@ function buildMasterList(cats) {
         });
       }
     })(cat));
-
-
-
   });
 }
 
