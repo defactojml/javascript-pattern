@@ -125,10 +125,84 @@ function buildMasterList(cats) {
 
 
 
-### catClicker V3
+### catClicker V3 (catClicker premium aplying the MVO pattern)
 
+Question 4
+What is the best approach?
 
+* Approach 1: minimalist on html with a lot of generation in the js
+```
+<div id="container" class="container">
 
+</div>
+```
+
+```javascript
+var listView = {
+  // initialize the view dom elements
+  init: function() {
+    this.containerElement = utils.retrieveContainerElement();
+    this.listElements = createListElements();
+    utils.addElementsToContainer(this.containerElement,this.listElements);
+    listView.render(this.listElements);
+
+    function createListElements(){
+      var mainElement = document.createElement('div');
+      mainElement.setAttribute("id","master");
+      mainElement.setAttribute("class","master");
+
+      var subTitleElement = document.createElement("h2");
+      subTitleElement.innerHTML = 'List of Cats';
+      mainElement.appendChild(subTitleElement);
+
+      var listContainerElement = document.createElement("ul");
+      mainElement.appendChild(listContainerElement);
+
+      return mainElement;
+    }
+  }
+};
+```
+
+* Approach 2: create the static  html with only the dynamic element in the js
+```
+<div id="container" class="container">
+<div id="master" class="master">
+    <h2>List of Cats</h2>
+    <ul id="listCats"></ul>
+</div>
+...
+</div>
+```
+
+```javascript
+var listView = {
+  // initialize the view dom elements
+  init: function() {
+    var ulListElement = document.getElementById('listCats');
+    listView.render(ulListElement);
+  },
+
+  render: function(ulListElement){
+    octopus.getSortedCats().forEach(function(cat){
+      var listElement = null;
+      listElement = document.createElement("li");
+      listElement.id = cat.id ;
+      listElement.innerHTML = '<a href="#">' + cat.name + '</a>';
+      ulListElement.appendChild(listElement);
+
+      listElement.addEventListener('click', function() {
+        var catId = this.id;
+        var cat = octopus.getCatById(catId);
+        detailView.render(detailView.detailElements.childNodes[1], cat);
+      });
+    });
+  }
+};
+```
+
+Question 5
+No usage of the currentcat concept. Is this mandatory?
 
 ### catClicker V4
 
