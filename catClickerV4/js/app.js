@@ -59,7 +59,7 @@ var octopus = {
   getFirstCatFromSortedCats: function () {
     return this.getSortedCats()[0];
   },
-  getCatById: function (id) {
+  getSelectedCatById: function (id) {
     return this.getSortedCats().filter(function (obj) {
       return obj.id === id;
     })[0];
@@ -83,7 +83,7 @@ var listView = {
 
       listElement.addEventListener('click', function () {
         var catId = this.id;
-        var cat = octopus.getCatById(catId);
+        var cat = octopus.getSelectedCatById(catId);
         detailView.render(cat);
       });
     });
@@ -110,7 +110,7 @@ var detailView = {
 
     detailCatImg.addEventListener('click', function () {
       var catId = detailCatName.getAttribute("catid");
-      var cat = octopus.getCatById(catId);
+      var cat = octopus.getSelectedCatById(catId);
       cat.counter += 1;
       detailCatCounter.innerHTML = "this cat has been clicked " + cat.counter + " times";
     });
