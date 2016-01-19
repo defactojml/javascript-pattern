@@ -31,7 +31,7 @@ var jsonCats = [{
 }];
 
 var model = {
-  getAllCats: function () {
+  getCats: function () {
     if (jsonCats.length) {
       return jsonCats;
     }
@@ -43,7 +43,7 @@ var octopus = {
   // - get the list of cats stored in the mocked array
   // - create the initial dom elements
   init: function () {
-    if (model.getAllCats()) {
+    if (model.getCats()) {
       listView.init();
       detailView.init();
       adminView.init();
@@ -52,7 +52,7 @@ var octopus = {
     }
   },
   getSortedCats: function () {
-    return model.getAllCats().sort(function (catA, catB) {
+    return model.getCats().sort(function (catA, catB) {
       return (catA.name).localeCompare(catB.name);
     });
   },
@@ -76,8 +76,7 @@ var listView = {
 
   render: function (listElements) {
     octopus.getSortedCats().forEach(function (cat) {
-      var listElement = null;
-      listElement = document.createElement("li");
+      var listElement = document.createElement("li");
       listElement.id = cat.id;
       listElement.innerHTML = '<a href="#">' + cat.name + '</a>';
       listElements.appendChild(listElement);

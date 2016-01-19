@@ -3,7 +3,7 @@
  */
 
 var model = {
-  getAllCats: function() {
+  getCats: function() {
     if (datas.length) {
       return datas;
     }
@@ -15,7 +15,7 @@ var octopus = {
   // - get the list of cats stored in the mocked array
   // - create the initial dom elements
   init: function() {
-    if (model.getAllCats()){
+    if (model.getCats()){
       listView.init();
       detailView.init();
     } else {
@@ -23,7 +23,7 @@ var octopus = {
     }
   },
   getSortedCats: function() {
-    return model.getAllCats().sort(function(catA, catB) {
+    return model.getCats().sort(function(catA, catB) {
       return (catA.name).localeCompare(catB.name);
     });
   },
@@ -36,47 +36,28 @@ var octopus = {
     })[0];
 
   }
-
-
 };
 
 // The view consists of 3 components: listView, detailView & errorView
 var listView = {
   // initialize the view dom elements
   init: function() {
-    this.containerElement = utils.retrieveContainerElement();
-    this.listElements = createListElements();
-    utils.addElementsToContainer(this.containerElement,this.listElements);
-    listView.render(this.listElements);
-
-    function createListElements(){
-      var mainElement = document.createElement('div');
-      mainElement.setAttribute("id","master");
-      mainElement.setAttribute("class","master");
-
-      var subTitleElement = document.createElement("h2");
-      subTitleElement.innerHTML = 'List of Cats';
-      mainElement.appendChild(subTitleElement);
-
-      var listContainerElement = document.createElement("ul");
-      mainElement.appendChild(listContainerElement);
-
-      return mainElement;
-    }
+    var ulListElement = document.getElementById('listCats');
+    listView.render(ulListElement);
   },
 
-  render: function(listElements){
+  render: function(ulListElement){
     octopus.getSortedCats().forEach(function(cat){
-      var listElement = null;
-      listElement = document.createElement("li");
+      // create the li element & associated its data
+      var listElement = document.createElement("li");
       listElement.id = cat.id ;
       listElement.innerHTML = '<a href="#">' + cat.name + '</a>';
-      listElements.childNodes[1].appendChild(listElement);
+      ulListElement.appendChild(listElement);
 
-
+      // create the event listener for the click - no used of the closure approach
+      // once we click on the link, detailView is getting displayed
       listElement.addEventListener('click', function() {
-        var catId = this.id;
-        var cat = octopus.getCatById(catId);
+        var cat = octopus.getCatById(this.id);
         detailView.render(detailView.detailElements.childNodes[1], cat);
       });
     });
@@ -84,9 +65,9 @@ var listView = {
 };
 
 var detailView = {
-  // initialize the view dom elements
+  // initialize the dom elements of the view
   init: function() {
-    this.containerElement = utils.retrieveContainerElement();
+    this.containerElement = document.getElementById('container');
     this.detailElements = createDetailElements();
     utils.addElementsToContainer(this.containerElement,this.detailElements);
     detailView.render(this.detailElements.childNodes[1], octopus.getFirstCatFromSortedCats());
@@ -133,7 +114,7 @@ var detailView = {
 
 var errorView = {
   init: function () {
-    this.containerElement = utils.retrieveContainerElement();
+    this.containerElement = document.getElementById('container');
     this.errorElements = createErrorElements();
     utils.addElementsToContainer(this.containerElement,this.errorElements);
     errorView.render(this.errorElements);
@@ -150,9 +131,6 @@ var errorView = {
 var utils = {
   addElementsToContainer: function(containerElement, element){
     containerElement.appendChild(element);
-  },
-  retrieveContainerElement: function() {
-    return document.getElementById('container');
   }
 };
 
