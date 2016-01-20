@@ -3,6 +3,7 @@
  */
 
 var model = {
+  currentCat: null,
   getCats: function () {
     if (datas.length) {
       return datas;
@@ -13,9 +14,11 @@ var model = {
 var octopus = {
   // on loading:
   // - get the list of cats stored in the mocked array
-  // - create the initial dom elements
+  // - dynamically generate the list of cats
+  // - display the detail of the first cat (from the sorted array)
   init: function () {
     if (model.getCats()) {
+      model.currentCat = this.getFirstCatFromSortedCats();
       listView.init();
       detailView.init();
     } else {
@@ -40,10 +43,9 @@ var octopus = {
 
 // The view consists of 3 components: listView, detailView & errorView
 var listView = {
-  // initialize the view dom elements
   init: function () {
     var ulListElement = document.getElementById('listCats');
-    listView.render(ulListElement);
+    this.render(ulListElement);
   },
 
   render: function (ulListElement) {
@@ -64,7 +66,6 @@ var listView = {
 };
 
 var detailView = {
-  // initialize the dom elements of the view
   init: function () {
     var ulDetailElement = document.getElementById('detailCat');
     this.render(ulDetailElement, octopus.getFirstCatFromSortedCats());
@@ -89,7 +90,7 @@ var errorView = {
     var masterElement = document.getElementById('master');
     var detailElement = document.getElementById('detail');
     var errorElement = document.getElementById('error');
-    errorView.render(masterElement, detailElement, errorElement);
+    this.render(masterElement, detailElement, errorElement);
   },
   render: function (masterElement, detailElement, errorElement) {
     masterElement.parentNode.removeChild(masterElement);
@@ -97,6 +98,5 @@ var errorView = {
     errorElement.style.visibility = "visible";
   }
 };
-
 
 octopus.init();
