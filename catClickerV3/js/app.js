@@ -49,6 +49,7 @@ var listView = {
   },
 
   render: function(ulListElement) {
+    // we better start from a clean sheat, any times
     ulListElement.innerHTML = "";
     octopus.getSortedCats().forEach(function(cat) {
       // create the li element & associated its data

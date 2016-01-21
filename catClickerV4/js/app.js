@@ -2,38 +2,12 @@
  * Created by jean-michel.legrand on 17/11/2015.
  */
 
-// mocked json file
-var jsonCats = [{
-  "id": "cat1",
-  "name": "Xuxa",
-  "img": 'images/kitty1.jpg',
-  "counter": 0
-}, {
-  "id": "cat2",
-  "name": "Dramatic",
-  "img": 'images/kitty2.jpg',
-  "counter": 0
-}, {
-  "id": "cat3",
-  "name": "Winter",
-  "img": 'images/kitty3.jpg',
-  "counter": 0
-}, {
-  "id": "cat4",
-  "name": "Japanese",
-  "img": 'images/kitty4.jpg',
-  "counter": 0
-}, {
-  "id": "cat5",
-  "name": "Sweeties",
-  "img": 'images/kitty5.jpg',
-  "counter": 0
-}];
 
 var model = {
-  getCats: function () {
-    if (jsonCats.length) {
-      return jsonCats;
+  currentCat: null,
+  getCats: function() {
+    if (datas.length) {
+      return datas;
     }
   }
 };
@@ -41,9 +15,11 @@ var model = {
 var octopus = {
   // on loading:
   // - get the list of cats stored in the mocked array
-  // - create the initial dom elements
+  // - dynamically generate the list of cats
+  // - display the detail of the first cat (from the sorted array)
   init: function () {
     if (model.getCats()) {
+      model.currentCat = this.getFirstCatFromSortedCats();
       listView.init();
       detailView.init();
       adminView.init();
@@ -70,22 +46,25 @@ var octopus = {
 var listView = {
   // initialize the view dom elements
   init: function () {
-    var listContainerElement = document.getElementById('cat-list');
-    listView.render(listContainerElement);
+    var ulListElement = document.getElementById('cat-list');
+    listView.render(ulListElement);
   },
 
-  render: function (listElements) {
+  render: function (ulListElement) {
+    // we better start from a clean sheat, any times
+    ulListElement.innerHTML = "";
     octopus.getSortedCats().forEach(function (cat) {
       var listElement = document.createElement("li");
       listElement.id = cat.id;
       listElement.innerHTML = '<a href="#">' + cat.name + '</a>';
-      listElements.appendChild(listElement);
-
+      // create the event listener for the click
+      // no usage of the closure approach
+      // once we click on the link, detailView.render()
       listElement.addEventListener('click', function () {
-        var catId = this.id;
-        var cat = octopus.getCatById(catId);
-        detailView.render(cat);
+        detailView.render(octopus.getCatById(this.id));
       });
+      ulListElement.appendChild(listElement);
+
     });
   }
 };
@@ -98,21 +77,19 @@ var detailView = {
 
   },
   render: function (cat) {
-    var detailCatName = document.getElementById('detailCatName');
-    detailCatName.setAttribute("catid", cat.id);
-    detailCatName.innerHTML = "cat's name is " + cat.name;
+    var catElement =  document.getElementById('cat-detail');
+    var catNameElement = document.getElementById('cat-name');
+    var catImgElement = document.getElementById('cat-img');
+    var catCounterElement = document.getElementById('cat-counter');
 
-    var detailCatImg = document.getElementById('detailCatImg');
-    detailCatImg.innerHTML = "<img id='picClickableZone' src=" + cat.img + " />";
+    catElement.setAttribute("cat-id", cat.id);
+    catNameElement.innerHTML = "cat's name is " + cat.name;
+    catImgElement.innerHTML = "<img src=" + cat.img + " />";
+    catCounterElement.innerHTML = "this cat has been clicked " + cat.counter + " times";
 
-    var detailCatCounter = document.getElementById('detailCatCounter');
-    detailCatCounter.innerHTML = "this cat has been clicked " + cat.counter + " times";
-
-    detailCatImg.addEventListener('click', function () {
-      var catId = detailCatName.getAttribute("catid");
-      var cat = octopus.getCatById(catId);
+    catImgElement.addEventListener('click', function () {
       cat.counter += 1;
-      detailCatCounter.innerHTML = "this cat has been clicked " + cat.counter + " times";
+      catCounterElement.innerHTML = "this cat has been clicked " + cat.counter + " times";
     });
   }
 };
