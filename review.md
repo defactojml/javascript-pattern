@@ -202,7 +202,16 @@ var listView = {
 ```
 
 Question 5
-No usage of the currentcat concept. Is this mandatory?
+The counter update does not work properly.
+The callback function is getting executed N times instead of one. Why?
+
+```javascript
+this.catImgElement.addEventListener('click', function() {
+    //TODO : use the currentCat property to update the field  ...
+    cat.counter += 1;
+    tempCatCounterElement.innerHTML = "This cat has been clicked " + cat.counter + " times";
+});
+```
 
 ### catClicker V4
 

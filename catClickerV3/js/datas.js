@@ -20,7 +20,7 @@ var datas = [{
   "counter": 0
 }, {
   "id": "cat4",
-  "name": "Japanese",
+  "name": "Viola",
   "img": 'images/kitty4.jpg',
   "counter": 0
 }, {
