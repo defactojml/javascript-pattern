@@ -51,7 +51,7 @@
 ```
 
 
-**Question 1
+**Question 1**
 
 Can't see the eventListener created in the dev tool in debug mode. To which properties can we see it?
 
@@ -98,10 +98,10 @@ Can't see the eventListener created in the dev tool in debug mode. To which prop
 
 * Externalize datas (cf data.js)
 
-**Question 2
+**Question 2**
 Each time, we click on the master view, we recreate from scratch the detail view. The best approach?
 
-**Question 3
+**Question 3**
 What is the best approach?
 
 * Approach 1: relying on global variables declares at the beginning of the file (masterElement)
@@ -128,7 +128,7 @@ function buildMasterList(cats) {
 
 ### catClicker V3 (catClicker premium aplying the MVO pattern)
 
-**Question 4
+**Question 4**
 What is the best approach?
 
 * Approach 1: minimalist on html with a lot of generation in the js
@@ -202,7 +202,7 @@ var listView = {
 };
 ```
 
-**Question 5
+**Question 5**
 The counter update does not work properly.
 The callback function is getting executed N times instead of one. Why?
 
