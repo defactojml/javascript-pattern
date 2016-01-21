@@ -33,7 +33,7 @@ var octopus = {
   getFirstCatFromSortedCats: function () {
     return this.getSortedCats()[0];
   },
-  getSelectedCatById: function (id) {
+  getCatById: function (id) {
     return this.getSortedCats().filter(function (obj) {
       return obj.id === id;
     })[0];
@@ -49,36 +49,42 @@ var listView = {
   },
 
   render: function (ulListElement) {
+    ulListElement.innerHTML = "";
     octopus.getSortedCats().forEach(function (cat) {
       // create the li element & associated its data
       var listElement = document.createElement("li");
       listElement.id = cat.id;
       listElement.innerHTML = '<a href="#">' + cat.name + '</a>';
-      ulListElement.appendChild(listElement);
-
-      // create the event listener for the click - no used of the closure approach
-      // once we click on the link, detailView is getting displayed
+      // create the event listener for the click
+      // no usage of the closure approach
+      // once we click on the link, detailView.render()
       listElement.addEventListener('click', function () {
-        detailView.render(document.getElementById('detailCat'), octopus.getSelectedCatById(this.id));
+        detailView.render(document.getElementById('detailCat'), octopus.getCatById(this.id));
       });
+      ulListElement.appendChild(listElement);
     });
   }
 };
 
 var detailView = {
   init: function () {
-    var ulDetailElement = document.getElementById('detailCat');
-    this.render(ulDetailElement, octopus.getFirstCatFromSortedCats());
+    var catElement = {
+      reference : document.getElementById('cat'),
+      name : document.getElementById('cat-name'),
+      img : document.getElementById('cat-img'),
+      counter :document.getElementById('cat-counter'),
+      clickableZone : document.getElementById('cat-img-clickable-zone')
+    };
+    this.render(catElement, octopus.getFirstCatFromSortedCats());
   },
-  render: function (catDetailElements, cat) {
+  render: function (catElement, cat) {
     //TODO : check the pizza app with the template approach
-    catDetailElements.children[0].setAttribute("id", cat.id);
-    catDetailElements.children[0].innerHTML = "cat's name is " + cat.name;
-    catDetailElements.children[1].innerHTML = "<img id='picClickableZone' src=" + cat.img + " />";
-    catDetailElements.children[2].innerHTML = "this cat has been clicked " + cat.counter + " times";
 
-    var clickableZoneElement = document.getElementById('picClickableZone');
-    clickableZoneElement.addEventListener('click', function () {
+    catElement.reference.setAttribute("cat-id", cat.id);
+    catElement.name.innerHTML = "The name of the cat is " + cat.name;
+    catElement.img.innerHTML = "<img id='cat-img-clickable-zone' src=" + cat.img + " />";
+    catElement.counter.innerHTML = "The image of this cat has been clicked  " + cat.counter + " times";
+    catElement.clickableZone.addEventListener('click', function () {
       cat.counter += 1;
       this.parentElement.parentElement.children[2].innerHTML = "this cat has been clicked " + cat.counter + " times";
     });
