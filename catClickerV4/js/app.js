@@ -70,7 +70,7 @@ var octopus = {
 var listView = {
   // initialize the view dom elements
   init: function () {
-    var listContainerElement = document.getElementById('list');
+    var listContainerElement = document.getElementById('cat-list');
     listView.render(listContainerElement);
   },
 
