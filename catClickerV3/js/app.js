@@ -83,10 +83,12 @@ var detailView = {
     this.catCounterElement.innerHTML = "This cat has been clicked  " + cat.counter + " times";
     // temp variable created to be used in the inner function # from the render function scope (so this # of this)
     var tempCatCounterElement = this.catCounterElement;
-    this.catImgElement.addEventListener('click', function() {
+    this.catImgElement.addEventListener('click', function(e) {
       //TODO : use the currentCat property to update the field  ...
       cat.counter += 1;
       tempCatCounterElement.innerHTML = "This cat has been clicked " + cat.counter + " times";
+      e.target.removeEventListener(e.type, arguments.callee);
+
     });
   }
 };
