@@ -218,3 +218,46 @@ this.catImgElement.addEventListener('click', function() {
 });
 ```
 
+### catClicker V4 (catClicker premium pro aplying the MVO pattern & an admin section)
+**Question 6**
+
+
+Naming convention for id
+
+* camelCase
+```
+    <div id="admin" class="admin">
+        <h2>Admin section</h2>
+
+        <div id="adminHeader" class="adminHeader">
+            <input type="button" value="admin" id="adminButton">
+        </div>
+```
+* others
+
+```
+    <div id="detail" class="detail">
+        <h2>Detail of the Cat selected</h2>
+        <ul id="cat-detail">
+            <li id="cat-name"></li>
+            <li id="cat-img"></li>
+            <li id="cat-counter"></li>
+        </ul>
+    </div>
+```
+
+**Question 7**
+
+What is the added value to have a form ?
+The following seems to be valid html
+
+```
+        <ul id="adminDetail" class="adminDetail">
+            <li><span>Name of the cat</span> <input id="catName"></li>
+            <li><span>Number of # for the cat</span><input id="catCounter"></li>
+            <li>
+                <input type="button" value="submit" id="submitBtn">
+                <input type="button" value="cancel" id="cancelBtn">
+            </li>
+        </ul>
+```

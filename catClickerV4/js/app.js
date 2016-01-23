@@ -5,7 +5,8 @@
 
 var model = {
   currentCat: null,
-  getCats: function() {
+  adminSectionVisibility: false,
+  getCats: function () {
     if (datas.length) {
       return datas;
     }
@@ -21,8 +22,9 @@ var octopus = {
     if (model.getCats()) {
       model.currentCat = this.getFirstCatFromSortedCats();
       listView.init();
-      detailView.init();
+      // admin view call before the detail since there is a dependancy detail -> admin
       adminView.init();
+      detailView.init();
     } else {
       errorView.init()
     }
@@ -39,7 +41,24 @@ var octopus = {
     return this.getSortedCats().filter(function (obj) {
       return obj.id === id;
     })[0];
+  },
+  setCurrentCat: function (cat) {
+    model.currentCat = cat;
+  },
+  getCurrentCat: function () {
+    return model.currentCat;
+  },
+  showAdminSection: function () {
+    model.adminSectionVisibility = true;
+    adminView.adminDetailElement.style.visibility = 'visible';
+
+  },
+  hideAdminSection: function () {
+    model.adminSectionVisibility = false;
+    adminView.adminDetailElement.style.visibility = 'hidden';
+
   }
+
 };
 
 // The view consists of 3 components: listView, detailView & errorView
@@ -62,6 +81,7 @@ var listView = {
       // once we click on the link, detailView.render()
       listElement.addEventListener('click', function () {
         detailView.render(octopus.getCatById(this.id));
+        octopus.setCurrentCat(octopus.getCatById(this.id));
       });
       ulListElement.appendChild(listElement);
 
@@ -72,12 +92,11 @@ var listView = {
 var detailView = {
   // initialize the view dom elements
   init: function () {
-    detailView.render(octopus.getFirstCatFromSortedCats());
-    adminView.render(octopus.getFirstCatFromSortedCats());
-
+    this.render(octopus.getFirstCatFromSortedCats());
   },
+
   render: function (cat) {
-    var catElement =  document.getElementById('cat-detail');
+    var catElement = document.getElementById('cat-detail');
     var catNameElement = document.getElementById('cat-name');
     var catImgElement = document.getElementById('cat-img');
     var catCounterElement = document.getElementById('cat-counter');
@@ -96,36 +115,48 @@ var detailView = {
 
 var adminView = {
   init: function () {
-  },
-  render: function (cat) {
-    var adminDetailElement = document.getElementById('adminDetail');
-    adminDetailElement.style.visibility = 'hidden';
+
+    // run one
+    // add all the event listeners to the elements declared
+
+    this.adminDetailElement = document.getElementById('adminDetail');
 
     var adminButton = document.getElementById('adminButton');
     adminButton.addEventListener('click', function () {
-      adminDetailElement.style.visibility = 'visible  ';
+      adminView.render();
+      octopus.showAdminSection();
     });
 
-    var catNameElement = document.getElementById('catName');
-    catNameElement.value = cat.name;
-    var catCounterElement = document.getElementById('catCounter');
-    catCounterElement.value = cat.counter;
+    this.catNameElement = document.getElementById('catName');
+    this.catCounterElement = document.getElementById('catCounter');
+
+    var tempCatNameElement = this.catNameElement;
+    var tempCatCounterElement = this.catCounterElement;
 
     var submitBtn = document.getElementById('submitBtn');
     submitBtn.addEventListener('click', function () {
-      cat.name = catNameElement.value;
-      cat.counter = parseInt(catCounterElement.value);
-      catNameElement.value = "";
-      catCounterElement.value = "";
-      adminDetailElement.style.visibility = 'hidden';
+      var currentCat = octopus.getCurrentCat();
+      currentCat.name = tempCatNameElement.value;
+      currentCat.counter = parseInt(tempCatCounterElement.value);
+      tempCatNameElement.value = "";
+      tempCatCounterElement.value = "";
+      octopus.hideAdminSection();
+      // refresh the detailled view
+      detailView.render(currentCat);
     });
 
     var cancelBtn = document.getElementById('cancelBtn');
     cancelBtn.addEventListener('click', function () {
-      catNameElement.value = "";
-      catCounterElement.value = "";
-      adminDetailElement.style.visibility = 'hidden';
+      octopus.hideAdminSection();
     });
+    // on loading, we hide the admin section
+    octopus.hideAdminSection();
+
+  },
+  render: function () {
+    var currentCat = octopus.getCurrentCat();
+    this.catNameElement.value = currentCat.name;
+    this.catCounterElement.value = currentCat.counter;
   }
 };
 
