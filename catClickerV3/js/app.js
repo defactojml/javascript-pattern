@@ -37,7 +37,12 @@ var octopus = {
     return this.getSortedCats().filter(function(obj) {
       return obj.id === id;
     })[0];
-
+  },
+  setCurrentCat: function (cat) {
+    model.currentCat = cat;
+  },
+  getCurrentCat: function () {
+    return model.currentCat;
   }
 };
 
@@ -61,6 +66,7 @@ var listView = {
       // once we click on the link, detailView.render()
       listElement.addEventListener('click', function() {
         detailView.render(octopus.getCatById(this.id));
+        octopus.setCurrentCat(octopus.getCatById(this.id));
       });
       ulListElement.appendChild(listElement);
     });
@@ -73,6 +79,12 @@ var detailView = {
     this.catNameElement = document.getElementById('cat-name');
     this.catImgElement = document.getElementById('cat-img');
     this.catCounterElement = document.getElementById('cat-counter');
+
+    this.catImgElement.addEventListener('click', function () {
+      var cat = octopus.getCurrentCat();
+      cat.counter += 1;
+      detailView.render(cat);
+    });
     this.render(octopus.getFirstCatFromSortedCats());
   },
   render: function(cat) {
@@ -81,15 +93,6 @@ var detailView = {
     this.catNameElement.innerHTML = "The name of the cat is " + cat.name;
     this.catImgElement.innerHTML = "<img src=" + cat.img + " />";
     this.catCounterElement.innerHTML = "This cat has been clicked  " + cat.counter + " times";
-    // temp variable created to be used in the inner function # from the render function scope (so this # of this)
-    var tempCatCounterElement = this.catCounterElement;
-    this.catImgElement.addEventListener('click', function(e) {
-      //TODO : use the currentCat property to update the field  ...
-      cat.counter += 1;
-      tempCatCounterElement.innerHTML = "This cat has been clicked " + cat.counter + " times";
-      e.target.removeEventListener(e.type, arguments.callee);
-
-    });
   }
 };
 
