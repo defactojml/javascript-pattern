@@ -12,13 +12,16 @@ var Cat = function () {
   }, this);
 };
 
-var viewModel = function () {
+var ViewModel = function () {
+
+  // temp storage for the viewModel object
+  var self = this;
 
   this.currentCat = ko.observable(new Cat());
 
   this.incrementCounter = function () {
-    this.currentCat().counter(this.currentCat().counter() + 1);
+    self.currentCat().counter(self.currentCat().counter() + 1);
   };
 };
 
-ko.applyBindings(new viewModel());
+ko.applyBindings(new ViewModel());
