@@ -1,6 +1,5 @@
-var viewModel = function () {
+var Cat = function () {
   var juniorThreshold = 5;
-
   this.name = ko.observable("Dramatic");
   this.imgSrc = ko.observable("images/kitty2.jpg");
   this.counter = ko.observable(0);
@@ -11,11 +10,15 @@ var viewModel = function () {
     (clicks < juniorThreshold) ? title = "Newborn" : title = "Infant";
     return title;
   }, this);
+};
+
+var viewModel = function () {
+
+  this.currentCat = ko.observable(new Cat());
 
   this.incrementCounter = function () {
-    this.counter(this.counter() + 1);
+    this.currentCat().counter(this.currentCat().counter() + 1);
   };
-
 };
 
 ko.applyBindings(new viewModel());

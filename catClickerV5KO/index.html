@@ -14,21 +14,21 @@
         <ul id="cat-detail">
             <li id="cat-name">
                 <span>cat's name is</span>
-                <span data-bind="text: name"></span>
-                <span data-bind="text: level"></span>
+                <span data-bind="text: currentCat().name"></span>
+                <span data-bind="text: currentCat().level"></span>
             </li>
             <li id="cat-img">
-                <img src="" data-bind="click: incrementCounter, attr: {src: imgSrc}"/>
+                <img src="" data-bind="click: incrementCounter, attr: {src: currentCat().imgSrc}"/>
             </li>
             <li id="cat-counter">
                 <span>this cat has been clicked</span>
-                <span data-bind="text: counter"></span>
+                <span data-bind="text: currentCat().counter"></span>
                 <span>times</span>
             </li>
             <li id="nicknames">
                 <span>List of nicknames associated to </span>
-                <span data-bind="text: name">:</span>
-                <ul data-bind="foreach: nicknames">
+                <span data-bind="text: currentCat().name">:</span>
+                <ul data-bind="foreach: currentCat().nicknames">
                     <li data-bind="text: $data"></li>
             </li>
         </ul>
