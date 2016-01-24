@@ -29,8 +29,7 @@
                 <span>List of nicknames associated to </span>
                 <span data-bind="text: name">:</span>
                 <ul data-bind="foreach: nicknames">
-
-                    <li data-bind="text: nickname"></li>
+                    <li data-bind="text: $data"></li>
             </li>
         </ul>
     </div>
