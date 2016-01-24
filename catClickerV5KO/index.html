@@ -15,9 +15,7 @@
             <li id="cat-name">
                 <span>cat's name is</span>
                 <span data-bind="text: name"></span>
-                <span>(</span>
                 <span data-bind="text: level"></span>
-                <span>)</span>
             </li>
             <li id="cat-img">
                 <img src="" data-bind="click: incrementCounter, attr: {src: imgSrc}"/>
@@ -28,6 +26,11 @@
                 <span>times</span>
             </li>
             <li id="nicknames">
+                <span>List of nicknames associated to </span>
+                <span data-bind="text: name">:</span>
+                <ul data-bind="foreach: nicknames">
+
+                    <li data-bind="text: nickname"></li>
             </li>
         </ul>
     </div>
