@@ -1,5 +1,6 @@
 var Cat = function (data) {
   var juniorThreshold = 5;
+  this.id = ko.observable(data.id);
   this.name = ko.observable(data.name);
   this.imgSrc = ko.observable(data.imgSrc);
   this.counter = ko.observable(data.counter);
@@ -14,7 +15,7 @@ var Cat = function (data) {
 
 var ViewModel = function () {
 
-  // temp storage for the viewModel object
+  // self always refer to the viewModel object
   var self = this;
 
   this.catList = ko.observableArray([]);
@@ -23,11 +24,15 @@ var ViewModel = function () {
     self.catList.push(new Cat(catItem))
   });
 
-  this.currentCat = ko.observable(new Cat(datas[0]));
+  this.currentCat = ko.observable(this.catList()[0]);
 
   this.incrementCounter = function () {
     self.currentCat().counter(self.currentCat().counter() + 1);
   };
+
+  this.changeCat = function (clickedCat) {
+    self.currentCat(clickedCat);
+  }
 };
 
 ko.applyBindings(new ViewModel());

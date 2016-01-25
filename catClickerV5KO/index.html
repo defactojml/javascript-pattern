@@ -9,6 +9,15 @@
 <h1>Cat Clicker MVO with admin using knockout</h1>
 
 <div id="container" class="container">
+    <div id="list" class="list">
+        <h2>List of Cats</h2>
+        <ul id="cat-list" data-bind="foreach: { data: catList, as: 'cat' }">
+            <li data-bind="attr: {'id': cat.id}">
+                <a href="#" data-bind="click: $parent.changeCat , text: cat.name"></a>
+            </li>
+        </ul>
+    </div>
+
     <div id="detail" class="detail">
         <h2>Detail of the Cat selected</h2>
         <ul data-bind="with:currentCat" id="cat-detail">
