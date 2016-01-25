@@ -1,9 +1,9 @@
-var Cat = function () {
+var Cat = function (data) {
   var juniorThreshold = 5;
-  this.name = ko.observable("Dramatic");
-  this.imgSrc = ko.observable("images/kitty2.jpg");
-  this.counter = ko.observable(0);
-  this.nicknames = ko.observableArray(['Berty', 'Charly', 'Nicky']);
+  this.name = ko.observable(data.name);
+  this.imgSrc = ko.observable(data.imgSrc);
+  this.counter = ko.observable(data.counter);
+  this.nicknames = ko.observableArray(data.nicknames);
   this.level = ko.computed(function () {
     var title;
     var clicks = this.counter();
@@ -17,7 +17,12 @@ var ViewModel = function () {
   // temp storage for the viewModel object
   var self = this;
 
-  this.currentCat = ko.observable(new Cat());
+  this.currentCat = ko.observable(new Cat({
+    name: "Dramatic",
+    imgSrc: "images/kitty2.jpg",
+    counter: 0,
+    nicknames: ['Berty', 'Charly', 'Nicky']
+  }));
 
   this.incrementCounter = function () {
     self.currentCat().counter(self.currentCat().counter() + 1);
