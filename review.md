@@ -265,3 +265,10 @@ The following seems to be valid html
 
 ### catClicker V5 (catClicker premium pro with knockout)
 **Question 8**
+
+How to debug ko observables in chrome devtool
+![image](koDebugDevTool.jpg)
+Is there a easier method than using the console and type :
+```
+self.catList()
+```

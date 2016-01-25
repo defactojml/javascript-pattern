@@ -17,12 +17,13 @@ var ViewModel = function () {
   // temp storage for the viewModel object
   var self = this;
 
-  this.currentCat = ko.observable(new Cat({
-    name: "Dramatic",
-    imgSrc: "images/kitty2.jpg",
-    counter: 0,
-    nicknames: ['Berty', 'Charly', 'Nicky']
-  }));
+  this.catList = ko.observableArray([]);
+
+  datas.forEach(function(catItem) {
+    self.catList.push(new Cat(catItem))
+  });
+
+  this.currentCat = ko.observable(new Cat(datas[0]));
 
   this.incrementCounter = function () {
     self.currentCat().counter(self.currentCat().counter() + 1);
