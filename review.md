@@ -272,3 +272,12 @@ Is there a easier method than using the console and type :
 ```
 self.catList()
 ```
+
+### neighborhood project
+**Question 9**
+
+why does the following [commit](https://github.com/defactojml/ud-nano-neighborhood/commit/95172989d27851377d1c0e385b55bb04c99f3e89) result into a js error 
+```
+Uncaught ReferenceError: google is not defined
+```
+
