@@ -281,3 +281,17 @@ why does the following [commit](https://github.com/defactojml/ud-nano-neighborho
 Uncaught ReferenceError: google is not defined
 ```
 
+**Question 10**
+What is the differences between the 2 commands
+```
+git clone url_repo
+cd main_directory
+git fetch origin
+git checkout -b start origin/start
+```
+
+```
+git clone url_repo
+cd main_directory
+git checkout start
+```
