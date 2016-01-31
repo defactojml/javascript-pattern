@@ -1,3 +1,5 @@
 
 
-command + ) = collapse a level
+command + )         == collapse a level
+
+option + command    == back history code !!!
