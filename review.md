@@ -295,3 +295,36 @@ git clone url_repo
 cd main_directory
 git checkout start
 ```
+
+**Question 11**
+this.filteredPlaces() is a computed observable to refresh the initial list loaded in an observable array self.touristPlaces()
+
+IF the filter works (setting visibillity property to on/off) the view is not updated accordingly 
+
+Why?
+
+
+```
+  this.filteredPlaces = ko.computed(function () {
+    // anytime the input field is reinitialized, we set visibility for all ...
+    var filterText = self.filterText().toLowerCase();
+    if (!filterText) {
+      self.touristPlaces().forEach(function (place) {
+        place.visibility = true;
+      });
+    } else {
+      self.touristPlaces().forEach(function (place) {
+        // find if the search input is contained in the name of the place
+        if (place.name.toLowerCase().indexOf(filterText) > -1) {
+          place.visibility = true;
+        } else {
+          place.visibility = false;
+        }
+      })
+    }
+  }, self);
+  
+```
+
+**Question 12**
+How to you link the updated arrays with the list of markers (not part of the view model) ...
